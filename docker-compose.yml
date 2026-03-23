@@ -4,7 +4,7 @@ version: "3.8"
 services:
 
   account:
-    image: deepa/account-service:latest
+    image: deepagangadhar/account-service:latest
     ports:
       - "3000:3000"
     networks:
@@ -27,7 +27,7 @@ services:
       retries: 3
 
   transaction:
-    image: deepa/transaction-service:latest
+    image: deepagangadhar/transaction-service:latest
     ports:
       - "4000:4000"
     networks:
@@ -58,7 +58,7 @@ services:
       retries: 3
 
   notification:
-    image: deepa/notification-service:latest
+    image: deepagangadhar/notification-service:latest
     networks:
       - bank-network
     depends_on:
