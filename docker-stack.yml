@@ -26,6 +26,11 @@ services:
 
   transaction:
     image: deepagangadhar/transaction-service:latest
+    ports:
+    - target: 4000
+      published: 4000
+      protocol: tcp
+      mode: ingress
     networks:
     - bank-network
     depends_on:
