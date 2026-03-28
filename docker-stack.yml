@@ -1,22 +1,17 @@
 #docker-compose 
-version: "3.8" 
+version: "3.8"
 
 services:
 
   account:
     image: deepagangadhar/account-service:latest
-    ports:
-      - target: 3000
-        published: 3000
-        protocol: tcp
-        mode: ingress
     networks:
-      - bank-network
+    - bank-network
     deploy:
       replicas: 2
       placement:
         constraints:
-          - node.role == worker
+        - node.role == worker
       restart_policy:
         condition: on-failure
       resources:
@@ -24,27 +19,22 @@ services:
           cpus: "0.5"
           memory: 512M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
       interval: 30s
       timeout: 10s
       retries: 3
 
   transaction:
     image: deepagangadhar/transaction-service:latest
-    ports:
-      - target: 4000
-        published: 4000
-        protocol: tcp
-        mode: ingress
     networks:
-      - bank-network
+    - bank-network
     depends_on:
-      - account
+    - account
     deploy:
       replicas: 3
       placement:
         constraints:
-          - node.role == worker
+        - node.role == worker
       update_config:
         parallelism: 1
         delay: 10s
@@ -56,9 +46,9 @@ services:
           cpus: "0.7"
           memory: 512M
     environment:
-      - ACCOUNT_SERVICE_URL=http://account:3000
+    - ACCOUNT_SERVICE_URL=http://account:3000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:4000" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -66,14 +56,14 @@ services:
   notification:
     image: deepagangadhar/notification-service:latest
     networks:
-      - bank-network
+    - bank-network
     depends_on:
-      - transaction
+    - transaction
     deploy:
       replicas: 2
       placement:
         constraints:
-          - node.role == worker
+        - node.role == worker
       restart_policy:
         condition: any
         delay: 5s
@@ -83,9 +73,9 @@ services:
           cpus: "0.3"
           memory: 256M
     environment:
-      - TRANSACTION_SERVICE_URL=http://transaction:4000
+    - TRANSACTION_SERVICE_URL=http://transaction:4000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:5000" ]
       interval: 30s
       timeout: 10s
       retries: 3
