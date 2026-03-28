@@ -6,7 +6,10 @@ services:
   account:
     image: deepagangadhar/account-service:latest
     ports:
-      - "3000:3000"
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
     networks:
       - bank-network
     deploy:
@@ -29,7 +32,10 @@ services:
   transaction:
     image: deepagangadhar/transaction-service:latest
     ports:
-      - "4000:4000"
+      - target: 4000
+        published: 4000
+        protocol: tcp
+        mode: ingress
     networks:
       - bank-network
     depends_on:
