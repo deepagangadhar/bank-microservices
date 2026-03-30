@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   account:
-    image: deepagangadhar/account-service:latest
+    image: deepagangadhar/account-service:v1
     ports:
       - "3000:3000"
     networks:
@@ -24,7 +24,7 @@ services:
         delay: 10s
 
   notification:
-    image: deepagangadhar/notification-service:latest
+    image: deepagangadhar/notification-service:v1
     networks:
       - bank-net
     deploy:
