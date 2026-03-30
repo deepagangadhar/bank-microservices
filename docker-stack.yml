@@ -1,90 +1,37 @@
-#docker-compose 
-version: "3.8"
+version: '3.8'
 
 services:
 
   account:
     image: deepagangadhar/account-service:latest
+    ports:
+      - "3000:3000"
     networks:
-    - bank-network
+      - bank-net
     deploy:
-      replicas: 1
-      placement:
-        constraints:
-        - node.role == worker
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      replicas: 2
 
   transaction:
-    image: deepagangadhar/transaction-service:latest
+    image: deepagangadhar/transaction-service:v2
     ports:
-    - target: 4000
-      published: 4000
-      protocol: tcp
-      mode: ingress
+      - "4000:4000"
     networks:
-    - bank-network
-    depends_on:
-    - account
+      - bank-net
     deploy:
-      replicas: 1
-      placement:
-        constraints:
-        - node.role == worker
+      replicas: 3
       update_config:
         parallelism: 1
         delay: 10s
-        order: start-first
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: "0.7"
-          memory: 512M
-    environment:
-    - ACCOUNT_SERVICE_URL=http://account:3000
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:4000" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   notification:
     image: deepagangadhar/notification-service:latest
     networks:
-    - bank-network
-    depends_on:
-    - transaction
+      - bank-net
     deploy:
-      replicas: 1
-      placement:
-        constraints:
-        - node.role == worker
+      replicas: 2
       restart_policy:
         condition: any
-        delay: 5s
-        max_attempts: 3
-      resources:
-        limits:
-          cpus: "0.3"
-          memory: 256M
-    environment:
-    - TRANSACTION_SERVICE_URL=http://transaction:4000
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:5000" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 networks:
-  bank-network:
+  bank-net:
     driver: overlay
