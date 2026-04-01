@@ -14,7 +14,10 @@ services:
   transaction:
     image: deepagangadhar/transaction-service:v2
     ports:
-      - "4000:4000"
+      - target: 4000
+        published: 4000
+        protocol: tcp
+        mode: ingress
     networks:
       - bank-net
     deploy:
