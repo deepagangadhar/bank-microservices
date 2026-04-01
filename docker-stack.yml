@@ -12,7 +12,7 @@ services:
       replicas: 2
 
   transaction:
-    image: deepagangadhar/transaction-service:v1
+    image: deepagangadhar/transaction-service:v2
     ports:
       - "4000:4000"
     networks:
