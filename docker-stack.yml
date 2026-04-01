@@ -5,7 +5,10 @@ services:
   account:
     image: deepagangadhar/account-service:v1
     ports:
-      - "3000:3000"
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
     networks:
       - bank-net
     deploy:
