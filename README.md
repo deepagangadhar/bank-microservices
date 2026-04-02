@@ -1,113 +1,77 @@
-# 🏦 Bank Microservices Deployment using Docker & AWS
+# 🚀 Bank Microservices Platform
 
-## 📌 Overview
+This project demonstrates a **microservices-based banking system** built and deployed using:
 
-This project demonstrates a simple **microservices architecture** deployed using **Docker containers on AWS EC2**.
-
-The system consists of three services:
-
-* Account Service (Node.js)** – Provides account details
-* Transaction Service (Flask)** – Orchestrates transactions
-* Notification Service (Flask)** – Sends notifications
+* **Docker (Phase 1)** – Local containerized setup
+* **Docker Swarm (Phase 2)** – Distributed cluster on AWS
 
 ---
 
-## 🧩 Architecture
+## 🧩 Project Evolution
 
-Client → Transaction Service → Account Service
-→ Notification Service
+### 🔹 Phase 1: Docker (Local Development)
 
----
+* Containerized services
+* Local networking
+* Manual container management
 
-## ⚙️ Tech Stack
+### 🔹 Phase 2: Docker Swarm (Production-Style Deployment)
 
-* Node.js (Express)
-* Python (Flask)
-* Docker
-* AWS EC2
-* REST APIs
-
----
-
-## 🚀 Features
-
-* Containerized microservices using Docker
-* Service-to-service communication using Docker networking
-* External access via port mapping
-* Deployed on AWS EC2
-* Simple API orchestration across services
+* Multi-node cluster (3 Managers + 2 Workers)
+* Overlay networking
+* Load balancing (Routing Mesh)
+* Self-healing containers
+* Rolling updates
 
 ---
 
-## 📁 Project Structure
+## 🏗️ Services
+
+| Service              | Tech    | Description              |
+| -------------------- | ------- | ------------------------ |
+| Account Service      | Node.js | Provides account details |
+| Transaction Service  | Flask   | Processes transactions   |
+| Notification Service | Node.js | Sends notifications      |
+
+---
+
+## 📂 Project Structure
 
 ```
 bank-microservices/
 │
-├── account/
-├── transaction/
-├── notification/
-└── docker-compose.yml
+├── phase-1-docker/
+├── phase-2-swarm/
+├── services/
+│   ├── account-service/
+│   ├── transaction-service/
+│   └── notification-service/
 ```
 
 ---
 
-## 🐳 Running Locally
+## 📘 Documentation
 
-```bash
-docker-compose up --build
-```
-
----
-
-## 🌐 API Endpoints
-
-| Service      | Endpoint     |
-| ------------ | ------------ |
-| Account      | /accounts    |
-| Notification | /notify      |
-| Transaction  | /transaction |
+* 🔹 [Phase 1: Docker Setup](./phase-1-docker/README.md)
+* 🔹 [Phase 2: Docker Swarm Deployment](./phase-2-swarm/README.md)
 
 ---
 
-## ☁️ Deployment on AWS
+## 🌐 Key Concepts Demonstrated
 
-1. Launch EC2 instance (Ubuntu)
-2. Install Docker & Docker Compose
-3. Clone repository
-4. Run:
-
-```bash
-docker-compose up --build -d
-```
-
-5. Access:
-
-```
-http://<EC2-IP>:4000/transaction
-```
+* Microservices Architecture
+* Containerization
+* Service Discovery
+* Overlay Networking
+* Load Balancing
+* High Availability
 
 ---
 
-## 🔍 Key Learnings
-
-* Docker containerization
-* Microservices communication
-* Port mapping and networking
-* Cloud deployment on AWS
-* Debugging container issues
-
----
-
-## 📌 Future Improvements
-
-* Add NGINX API Gateway
-* Implement CI/CD pipeline
-* Migrate to Kubernetes
-
----
-
-## 👩‍💻 Author
+## 👨‍💻 Author
 
 Deepa Gangadhar
 
+---
+
+⭐ If you like this project, give it a star!
